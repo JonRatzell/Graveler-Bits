@@ -23,7 +23,13 @@ Requires [Rust toolchain](https://www.rust-lang.org/tools/install)
 ## Bonus
 Cranking TOTAL_ROLLS up in [main.rs](https://github.com/JonRatzell/Graveler-Bits/blob/main/src/main.rs) turns this program into an excellent stress test for your CPU's temps.[^2]
 
+#### Addendum ~2 Years Later
+Running the same command above on the same machine now with Debian 13 (was Windows 10), and current rustc (1.98.1) can perform 1 billion iterations in ~1.03s
 
+Perhaps even more notable however is running `RUSTFLAGS='-C target_cpu=x86-64-v3' cargo run --release` gets me a time of ~0.76 on my current setup.
+When I first wrote this, I was unaware that rustc generally defaults to building for the oldest CPU available for a target,[^3] and that I had inadvertently left some performance gains on the table.[^4]
 
 [^1]: Best time on my system. YMMV
 [^2]: Nothing gets temps going quite like running every core at 100% for minutes.
+[^3]: And understandably so. In my case trying to run with v4 results in `Illegal instruction (core dumped)`. Unless you *need* the features, it's generally preferable to be compatible with the most CPUs.
+[^4]: [The more you know](https://en.wikipedia.org/wiki/X86-64#Microarchitecture_levels)
